@@ -1,0 +1,27 @@
+<biblStruct xml:id="b2">
+  <analytic>
+    <title level="a" type="main">
+      Status of indirect searches for New Physics with heavy flavour decays after the initial LHC run
+    </title>
+    <author>
+      <persName>
+        <forename type="first">G</forename>
+        <surname>Isidori</surname>
+      </persName>
+    </author>
+    <author>
+      <persName>
+        <forename type="first">F</forename>
+        <surname>Teubert</surname>
+      </persName>
+    </author>
+  </analytic>
+  <monogr>
+    <title level="j">Eur.Phys.J.Plus</title>
+    <imprint>
+      <biblScope unit="volume">129</biblScope>
+      <biblScope unit="issue">40</biblScope>
+      <date type="published" when="2014" />
+    </imprint>
+  </monogr>
+</biblStruct>
