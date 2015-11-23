@@ -30,7 +30,7 @@
   \vspace{0.25cm}
   \includegraphics[scale=0.25]{tex/img/inspire}
 }
-\date{October 14th, 2015}
+\date{November 23rd, 2015}
 
 % http://tex.stackexchange.com/a/4304/10806
 \newcommand{\cpp}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
@@ -48,28 +48,40 @@
   \begin{frame}{Use cases}
     Curators often find themselves in one of the following situations:
 
-    \vspace{0.25cm}
+    \vspace{0.5cm}
 
     \begin{enumerate}
       \item They only have the PDF of a paper, but no metadata.
       \item The source provides only part of the metadata, but they want to extract more from the PDF.
-      \item They want to save the time spent entering metadata manually in BibEdit.
+      \item They want to save the time spent entering metadata manually.
     \end{enumerate}
-
-    \vspace{0.25cm}
-
-    GROBID could help them solve these problems.
   \end{frame}
 
-  \begin{frame}{GROBID}
+  \begin{frame}{Legacy: RefExtract}
+    These problems were partially solved in the past by RefExtract, a series of
+    heuristic based regular expressions to extract references from the output
+    of \texttt{pdftotext}.
+
+    \vspace{0.5cm}
+
+    This solution eventually grew out of proportions and became hard to mantain, so
+    we approached a library called GROBID as a better \textbf{off-the-shelf} solution.
+  \end{frame}
+
+  \begin{frame}{Future: GROBID}
     GROBID (GeneRation Of BIbliographical Data) is a machine learning library for parsing
     unstructured PDFs in structured XML documents, with a focus on technical and scientific
     publications.
 
     \vspace{0.5cm}
 
-    GROBID is a Java library that wraps Wapiti, a \cpp\xspace toolkit for segmenting and
-    labeling sequences.
+    It is a Java library that wraps Wapiti, a \cpp\xspace toolkit for segmenting and
+    labeling sequences using Conditional Random Fields.
+
+    \vspace{0.25cm}
+
+    Its starting point is the output of \texttt{pdftoxml}, which retains much more of
+    the PDF structure than \texttt{pdftotext}.
 
     \vspace{0.5cm}
 
@@ -148,58 +160,9 @@
     and requires lots of training data to function properly.
   \end{frame}
 
-  \begin{frame}{Invenio-Grobid}
-    Unfortunately, the XML output is not compatible with what we use in Inspire.
-    So we need to add some layer between GROBID and Invenio: \texttt{invenio-grobid}.
-
-    \vspace{0.25cm}
-
-    \texttt{invenio-grobid} is the joint work of me, my supervisor Jan Åge Lavik and
-    Ilias Koutsakis.
-
-    \vspace{0.25cm}
-
-    \texttt{invenio-grobid} has been recently released on PyPI and is available at
-    \url{https://github.com/inspirehep/invenio-grobid}.
-  \end{frame}
-
   \begin{frame}[plain]
     \makebox[\textwidth][c]{
       \Huge DEMO
     }
-  \end{frame}
-
-  \begin{frame}{Current status and tentative roadmap, 1/2}
-    \begin{enumerate}
-      \setlength\itemsep{0.5cm}
-      \item \begin{itemize}
-              \item Allow catalogers to upload PDFs
-              \item Automatic extraction of metadata
-              \item Possibility to push to system
-            \end{itemize}
-      \item \begin{itemize}
-              \item Allow catalogers to edit extracted metadata
-              \item Perhaps integrate JSONEditor?
-            \end{itemize}
-    \end{enumerate}
-  \end{frame}
-
-  \begin{frame}{Current status and tentative roadmap, 2/2}
-    \begin{enumerate}
-      \setcounter{enumi}{2}
-      \setlength\itemsep{0.25cm}
-      \item \begin{itemize}
-              \item Take over bibliographic reference parsing (i.e. kill Refextract)
-	      \item Consolidate with other services (e.g. CrossRef)
-	      \item Integrate in automatic ingestion workflows
-            \end{itemize}
-      \item \begin{itemize}
-              \item Pre-fill user submission forms from PDF
-            \end{itemize}
-      \item \begin{itemize}
-              \item \texttt{invenio-grobid} could be used to feed back corrections in GROBID, improving its precision
-              \item Advanced visual interface to correct extraction (e.g. side-by-side view)
-            \end{itemize}
-    \end{enumerate}
   \end{frame}
 \end{document}
