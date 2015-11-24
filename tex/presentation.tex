@@ -14,6 +14,7 @@
 \setbeamertemplate{bibliography entry title}{}
 \setbeamertemplate{bibliography entry location}{}
 \setbeamertemplate{bibliography entry note}{}
+\setbeamertemplate{footline}[frame number]
 
 % http://tex.stackexchange.com/a/151311/10806
 \addtobeamertemplate{title page}{
@@ -21,8 +22,8 @@
 }{}
 
 \title{
-  Machine Learning Reference Extraction\\
-  Using GROBID
+  Text Mining with Machine Learning:\\
+  Reference Extraction Using GROBID
 }
 \author[Jacopo Notarstefano]{
   Jacopo Notarstefano\\
@@ -30,7 +31,7 @@
   \vspace{0.25cm}
   \includegraphics[scale=0.25]{tex/img/inspire}
 }
-\date{November 23rd, 2015}
+\date{November 24th, 2015}
 
 % http://tex.stackexchange.com/a/4304/10806
 \newcommand{\cpp}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
@@ -45,6 +46,16 @@
     \titlepage
   \end{frame}
 
+  \begin{frame}{INSPIRE Status}
+    The main features of INSPIRE are the citation extraction and their proper linking.
+    Every year we ingest $\sim50\text{K}$ records, and we extract from them $\sim1.6\text{M}$ citations.
+
+    \vspace{0.5cm}
+
+    This process is facilitated by trained cataloguers, called \emph{curators}, and currently
+    constitutes the major part of the manual work done at INSPIRE. Clearly, this is a bottle neck.
+  \end{frame}
+
   \begin{frame}{Use cases}
     Curators often find themselves in one of the following situations:
 
@@ -57,18 +68,7 @@
     \end{enumerate}
   \end{frame}
 
-  \begin{frame}{Legacy: RefExtract}
-    These problems were partially solved in the past by RefExtract, a series of
-    heuristic based regular expressions to extract references from the output
-    of \texttt{pdftotext}.
-
-    \vspace{0.5cm}
-
-    This solution eventually grew out of proportions and became hard to mantain, so
-    we approached a library called GROBID as a better \textbf{off-the-shelf} solution.
-  \end{frame}
-
-  \begin{frame}{Future: GROBID}
+  \begin{frame}{GROBID}
     GROBID (GeneRation Of BIbliographical Data) is a machine learning library for parsing
     unstructured PDFs in structured XML documents, with a focus on technical and scientific
     publications.
@@ -76,21 +76,19 @@
     \vspace{0.5cm}
 
     It is a Java library that wraps Wapiti, a \cpp\xspace toolkit for segmenting and
-    labeling sequences using Conditional Random Fields.
-
-    \vspace{0.25cm}
-
-    Its starting point is the output of \texttt{pdftoxml}, which retains much more of
-    the PDF structure than \texttt{pdftotext}.
+    labeling sequences using Conditional Random Fields. Its starting point is the output
+    of \texttt{pdftoxml}, which retains much more of the PDF structure than \texttt{pdftotext}.
 
     \vspace{0.5cm}
 
-    GROBID is widely used, for example at ResearchGate, Mendeley, HAL...
+    GROBID has been adapted to the HEP use case by Joseph Boyd under the supervision of Gilles
+    Louppe. GROBID is widely used, for example at ResearchGate, Mendeley, HAL...
   \end{frame}
 
   \begin{frame}{Labeling sequences and PDFs, 1/2}
-    Let's see why extracting metadata from a PDF can be reduced to labeling a sequence.
-    Let's consider for example a reference:
+    We use Conditional Random Fields because extracting metadata from a PDF can
+    be reduced to to labeling a sequence.  Let's consider for example a
+    reference:
 
     \vspace{0.5cm}
 
@@ -100,8 +98,8 @@
   \end{frame}
 
   \begin{frame}{Labeling sequences and PDFs, 2/2}
-    Extracting metadata can be seen as labeling each word with a category,
-    encoded in this case as a color:
+    The task of extracting metadata can be seen as labeling each word with a
+    category, encoded in this case as a color:
 
     \vspace{0.5cm}
 
@@ -111,9 +109,8 @@
   \end{frame}
 
   \begin{frame}{GROBID architecture}
-    In GROBID parlance, the \emph{knowledge} that is used to extract metadata
-    from data is called a \textbf{model}. GROBID is nothing more than a
-    cascade of models, each acting on the output of the previous one.
+    GROBID is nothing more than a cascade of models, each acting on the output
+    of the previous one.
 
     \vspace{0.5cm}
 
@@ -123,26 +120,15 @@
   \end{frame}
 
   \begin{frame}{GROBID's output: TEI}
-    TEI (Text Encoding Initiative) publishes a set of guidelines which specify
-    encoding methods for machine-readable texts. By extension, we will call
-    ``TEI'' the format described by these guidelines. GROBID's output conforms
-    to a subset of TEI.
+    TEI (Text Encoding Initiative) publishes a set of
+    guidelines\footnote{\url{http://www.tei-c.org/Guidelines/}} which specify
+    encoding methods for machine-readable texts. By extension, we will call ``TEI''
+    the format described by these guidelines. GROBID's output conforms to a subset
+    of TEI.
 
     \vspace{0.5cm}
 
     \inputminted[fontsize=\tiny]{xml}{tex/src/reference.xml}
-  \end{frame}
-
-  \begin{frame}{GROBID credits}
-    GROBID is the work of Patrice Lopez, developer at INRIA. It has been adapted
-    to papers from the HEP community by Joseph Boyd as part of his Master's Thesis
-    for EPFL, under the supervision of Gilles Louppe, Senior Fellow at Inspire.
-
-    \vspace{0.5cm}
-
-    In particular, Joseph added to GROBID the concept of a \emph{collaboration},
-    such as ATLAS or CMS, and improved considerably the accuracy of GROBID's
-    models by providing lots of training data, taken from Inspire.
   \end{frame}
 
   \begin{frame}{Caveat emptor}
